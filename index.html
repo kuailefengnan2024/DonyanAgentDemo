@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI创意总监 - 产品原型图</title>
+    <title>AI创意总监 - Figma插件模式</title>
     <style>
         * {
             margin: 0;
@@ -21,59 +21,61 @@
         }
 
         .prototype-container {
-            width: 1200px;
-            height: 800px;
+            width: 400px;
+            height: 720px;
             background: white;
-            border-radius: 20px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.05);
+            border-radius: 8px;
+            box-shadow: 0 4px S20px rgba(0,0,0,0.1);
             display: flex;
+            flex-direction: column;
             overflow: hidden;
         }
 
-        /* 左侧聊天区域 */
         .chat-section {
             flex: 1;
             display: flex;
             flex-direction: column;
-            border-right: 1px solid #e5e7eb;
+            min-height: 0;
         }
 
         .chat-header {
-            padding: 20px;
-            background: #4b5563; /* Lighter Gray */
-            color: white;
+            padding: 16px;
+            background: #ffffff;
+            color: #1f2937;
             display: flex;
             align-items: center;
             gap: 12px;
+            border-bottom: 1px solid #e5e7eb;
         }
 
         .chat-header h1 {
-            font-size: 20px;
+            font-size: 16px;
             font-weight: 600;
         }
 
         .ai-icon {
-            width: 32px;
-            height: 32px;
-            background: rgba(255,255,255,0.2);
-            border-radius: 50%;
+            width: 28px;
+            height: 28px;
+            background: #f3f4f6;
+            border-radius: 6px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 16px;
+            font-size: 14px;
+            color: #4b5563;
         }
 
         .chat-messages {
             flex: 1;
-            padding: 20px;
+            padding: 16px;
             overflow-y: auto;
-            background: #fafafa;
+            background: #ffffff;
         }
 
         .message {
-            margin-bottom: 20px;
+            margin-bottom: 16px;
             display: flex;
-            gap: 12px;
+            gap: 10px;
         }
 
         .message.user {
@@ -81,66 +83,65 @@
         }
 
         .message-avatar {
-            width: 36px;
-            height: 36px;
+            width: 32px;
+            height: 32px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 14px;
+            font-size: 12px;
             font-weight: 600;
             flex-shrink: 0;
         }
 
         .message.user .message-avatar {
-            background: #6b7280; /* Lighter Gray */
+            background: #4f46e5;
             color: white;
         }
 
         .message.ai .message-avatar {
-            background: #6b7280; /* Lighter Gray */
-            color: white;
+            background: #e5e7eb;
+            color: #4b5563;
         }
 
         .message-content {
-            max-width: 70%;
-            padding: 12px 16px;
-            border-radius: 18px;
+            max-width: 80%;
+            padding: 10px 14px;
+            border-radius: 12px;
             line-height: 1.5;
         }
 
         .message.user .message-content {
-            background: #4b5563; /* Lighter Gray */
+            background: #4f46e5;
             color: white;
             border-bottom-right-radius: 4px;
         }
 
         .message.ai .message-content {
-            background: white;
-            color: #374151;
-            border: 1px solid #e4e4e7;
+            background: #f3f4f6;
+            color: #1f2937;
             border-bottom-left-radius: 4px;
         }
 
         .chat-input {
-            padding: 20px;
+            padding: 16px;
             background: white;
             border-top: 1px solid #e5e7eb;
         }
 
         .input-container {
             display: flex;
-            gap: 12px;
+            gap: 8px;
             align-items: flex-end;
         }
 
         .input-field {
             flex: 1;
-            min-height: 44px;
-            max-height: 120px;
-            padding: 12px 16px;
-            border: 2px solid #e5e7eb;
-            border-radius: 22px;
+            min-height: 40px;
+            max-height: 100px;
+            padding: 10px 14px;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
             resize: none;
             font-family: inherit;
             font-size: 14px;
@@ -149,165 +150,52 @@
         }
 
         .input-field:focus {
-            border-color: #4b5563; /* Lighter Gray */
+            border-color: #4f46e5;
         }
-
-        .attach-button {
-            width: 44px;
-            height: 44px;
-            background: transparent;
-            color: #52525b;
-            border: 1px solid #d4d4d8;
-            border-radius: 50%;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.2s;
+        
+        .attach-button, .send-button {
+             width: 40px;
+             height: 40px;
+             background: transparent;
+             color: #6b7280;
+             border: 1px solid #d1d5db;
+             border-radius: 6px;
+             cursor: pointer;
+             display: flex;
+             align-items: center;
+             justify-content: center;
+             transition: all 0.2s;
         }
-
-        .attach-button:hover {
-            background: #f4f4f5;
-            border-color: #a1a1aa;
+        
+        .attach-button:hover, .send-button:hover {
+            background: #f9fafb;
+            border-color: #9ca3af;
         }
 
         .send-button {
-            width: 44px;
-            height: 44px;
-            background: #4b5563; /* Lighter Gray */
+            background: #4f46e5;
             color: white;
             border: none;
-            border-radius: 50%;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: background-color 0.2s;
         }
 
         .send-button:hover {
-            background: #374151; /* Darker shade for hover */
+            background: #4338ca;
         }
 
-        /* 右侧图片展示区域 */
-        .image-section {
-            width: 400px;
-            display: flex;
-            flex-direction: column;
-            background: #ffffff;
-        }
-
-        .image-header {
-            padding: 20px;
-            background: white;
-            border-bottom: 1px solid #e5e7eb;
-        }
-
-        .image-header h2 {
-            font-size: 18px;
-            color: #374151;
-            margin-bottom: 8px;
-        }
-
-        .image-header p {
-            font-size: 14px;
-            color: #6b7280;
-        }
-
-        .image-gallery {
-            flex: 1;
-            padding: 20px;
-            overflow-y: auto;
-        }
-
-        .image-item {
-            background: white;
-            border-radius: 12px;
-            padding: 16px;
-            margin-bottom: 16px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
-
-        .image-placeholder {
-            width: 100%;
-            height: 200px;
-            background: #f4f4f5;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #71717a;
-            font-size: 14px;
-            margin-bottom: 12px;
-        }
-
-        .image-info {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 8px;
-        }
-
-        .style-tag {
-            background: #e4e4e7;
-            color: #3f3f46;
-            padding: 4px 8px;
-            border-radius: 12px;
-            font-size: 12px;
-            font-weight: 500;
-        }
-
-        .score {
-            font-size: 12px;
-            color: #6b7280;
-        }
-
-        .image-actions {
-            display: flex;
-            gap: 8px;
-        }
-
-        .action-button {
-            flex: 1;
-            padding: 8px 12px;
-            border: 1px solid #e5e7eb;
-            background: white;
-            border-radius: 6px;
-            font-size: 12px;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .action-button:hover {
-            background: #f3f4f6;
-        }
-
-        .action-button.primary {
-            background: #4b5563; /* Lighter Gray */
-            color: white;
-            border-color: #4b5563; /* Lighter Gray */
-        }
-
-        .action-button.primary:hover {
-            background: #374151; /* Darker shade for hover */
-        }
-
-        /* 状态指示器 */
         .status-indicator {
             display: flex;
             align-items: center;
             gap: 8px;
-            padding: 12px 16px;
-            background: #f4f4f5;
-            border-left: 4px solid #a1a1aa;
-            margin: 16px 20px;
-            border-radius: 4px;
+            padding: 8px 16px;
+            background: #f3f4f6;
+            margin: 0 16px 12px;
+            border-radius: 6px;
         }
 
         .status-dot {
             width: 8px;
             height: 8px;
-            background: #a1a1aa;
+            background: #6b7280;
             border-radius: 50%;
             animation: pulse 2s infinite;
         }
@@ -318,49 +206,14 @@
         }
 
         .status-text {
-            font-size: 14px;
-            color: #52525b;
-        }
-
-        /* 快速操作按钮 */
-        .quick-actions {
-            padding: 16px 20px;
-            background: white;
-            border-top: 1px solid #e5e7eb;
-        }
-
-        .quick-actions h3 {
-            font-size: 14px;
-            color: #374151;
-            margin-bottom: 12px;
-        }
-
-        .quick-action-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 8px;
-        }
-
-        .quick-action {
-            padding: 8px 12px;
-            background: #f3f4f6;
-            border: none;
-            border-radius: 6px;
             font-size: 12px;
-            color: #374151;
-            cursor: pointer;
-            transition: background-color 0.2s;
+            color: #4b5563;
         }
 
-        .quick-action:hover {
-            background: #e5e7eb;
-        }
-
-        /* 选项选择器样式 */
         .option-selector {
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 8px;
             margin: 8px 0;
         }
 
@@ -368,39 +221,35 @@
             display: flex;
             align-items: center;
             gap: 12px;
-            padding: 16px;
-            border: 2px solid #e5e7eb;
-            border-radius: 12px;
+            padding: 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
             cursor: pointer;
             transition: all 0.2s;
             position: relative;
-            background: white;
+            background: #ffffff;
         }
 
         .option-item:hover {
-            border-color: #a1a1aa;
+            border-color: #4f46e5;
             background: #f9fafb;
         }
-
-        .option-item.active {
-            border-color: #4b5563; /* Lighter Gray */
-            background: transparent;
-        }
-
+        
         .option-item.selected {
-            border-color: #4b5563; /* Lighter Gray */
-            background: #f4f4f5;
+            border-color: #4f46e5;
+            background: #eef2ff;
         }
 
         .option-icon {
-            font-size: 24px;
-            width: 40px;
-            height: 40px;
+            font-size: 20px;
+            width: 36px;
+            height: 36px;
             display: flex;
             align-items: center;
             justify-content: center;
-            background: rgba(255,255,255,0.8);
-            border-radius: 8px;
+            background: #eef2ff;
+            color: #4f46e5;
+            border-radius: 6px;
             flex-shrink: 0;
         }
 
@@ -409,9 +258,10 @@
         }
 
         .option-title {
-            font-weight: 600;
-            color: #374151;
-            margin-bottom: 4px;
+            font-weight: 500;
+            color: #1f2937;
+            margin-bottom: 2px;
+            font-size: 14px;
         }
 
         .option-desc {
@@ -423,18 +273,30 @@
             position: absolute;
             top: -8px;
             right: -8px;
-            background: #4b5563; /* Lighter Gray */
+            background: #4f46e5;
             color: white;
             font-size: 10px;
-            padding: 4px 8px;
+            padding: 3px 6px;
             border-radius: 12px;
-            font-weight: 600;
+            font-weight: 500;
         }
+        .image-placeholder {
+            width: 100%;
+            height: 220px;
+            background: #eef2ff;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #4338ca;
+            font-size: 14px;
+            margin-bottom: 12px;
+            border: 1px dashed #c7d2fe;
+       }
     </style>
 </head>
 <body>
     <div class="prototype-container">
-        <!-- 左侧聊天区域 -->
         <div class="chat-section">
             <div class="chat-header">
                 <div class="ai-icon">🎨</div>
@@ -445,7 +307,7 @@
                 <div class="message ai">
                     <div class="message-avatar">AI</div>
                     <div class="message-content">
-                        hi,我可以帮你做需求直接上线。选择你要做啥：
+                        你好，请选择您想做什么：
                     </div>
                 </div>
                 
@@ -453,7 +315,7 @@
                     <div class="message-avatar">AI</div>
                     <div class="message-content">
                         <div class="option-selector">
-                            <div class="option-item active">
+                            <div class="option-item">
                                 <div class="option-icon">🖼️</div>
                                 <div class="option-text">
                                     <div class="option-title">头像框</div>
@@ -489,144 +351,140 @@
                 <div class="message user">
                     <div class="message-avatar">您</div>
                     <div class="message-content">
-                        KV
+                        KV主视觉
                     </div>
                 </div>
                 
                 <div class="message ai">
                     <div class="message-avatar">AI</div>
                     <div class="message-content">
-                        很好！您选择了KV主视觉设计。请描述您的创意需求，比如主题、风格、色调等，我会为您创作专业的KV视觉。
+                        好的！请描述您的创意需求，比如主题、风格、色调等。
                     </div>
                 </div>
                 
                 <div class="message user">
                     <div class="message-avatar">您</div>
                     <div class="message-content">
-                        我想要一条国潮风的龙在天上飞，用于游戏活动的KV主视觉
+                        我想要一个麦田舞者的KV主视觉
                     </div>
                 </div>
-                
+
                 <div class="message ai">
                     <div class="message-avatar">AI</div>
                     <div class="message-content">
-                        好的！我理解您想要一个国潮风格的飞龙KV主视觉。我会为您推荐几种设计风格：传统水墨、现代国潮、赛博国风。正在搜索参考图片并分析风格特征...
+                        <div class="status-indicator" style="margin: 0 0 12px 0; padding: 12px; background: #eef2ff; border-left: 2px solid #4f46e5;">
+                            <div class="status-dot" style="background: #4f46e5;"></div>
+                            <div class="status-text" style="color: #4338ca;">正在生成KV主视觉...</div>
+                        </div>
+                        <div class="image-placeholder">
+                           🐉 国潮飞龙KV主视觉<br>生成中...
+                        </div>
                     </div>
                 </div>
-                
-                <div class="message ai">
-                    <div class="message-avatar">AI</div>
-                    <div class="message-content">
-                        已完成风格分析！我为您生成了3种不同风格的KV主视觉，请在右侧查看。您可以选择喜欢的风格，或告诉我需要调整的地方。
-                    </div>
-                </div>
-                
-                <div class="message user">
-                    <div class="message-avatar">您</div>
-                    <div class="message-content">
-                        第一张不错，但是龙的颜色能改成金色吗？背景也要更有气势一些
-                    </div>
-                </div>
-                
-                <div class="message ai">
-                    <div class="message-avatar">AI</div>
-                    <div class="message-content">
-                        明白了！我会调整龙的颜色为金色，并增强背景的气势感。正在重新生成KV主视觉...
-                    </div>
-                </div>
-            </div>
-            
-            <div class="status-indicator">
-                <div class="status-dot"></div>
-                <div class="status-text">正在生成KV主视觉中，预计需要30秒...</div>
             </div>
             
             <div class="chat-input">
                 <div class="input-container">
-                    <textarea class="input-field" placeholder="描述您的创意想法，或对当前图像提出修改建议..."></textarea>
+                    <textarea class="input-field" placeholder="输入您的想法..."></textarea>
                     <button class="attach-button">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M10 2.5C10 2.22386 9.77614 2 9.5 2H4C2.89543 2 2 2.89543 2 4V20C2 21.1046 2.89543 22 4 22H20C21.1046 22 22 21.1046 22 20V9.5C22 9.22386 21.7761 9 21.5 9H15C12.2386 9 10 6.76142 10 4V2.5Z" stroke="#52525b" stroke-width="1.5"/>
-                            <path d="M14 2V5C14 6.65685 15.3431 8 17 8H20.5" stroke="#52525b" stroke-width="1.5"/>
-                            <path d="M8 15H16" stroke="#52525b" stroke-width="1.5" stroke-linecap="round"/>
-                            <path d="M8 18H13" stroke="#52525b" stroke-width="1.5" stroke-linecap="round"/>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                           <path d="M10 2.5C10 2.22386 9.77614 2 9.5 2H4C2.89543 2 2 2.89543 2 4V20C2 21.1046 2.89543 22 4 22H20C21.1046 22 22 21.1046 22 20V9.5C22 9.22386 21.7761 9 21.5 9H15C12.2386 9 10 6.76142 10 4V2.5Z" stroke="#6B7280" stroke-width="1.5"/>
+                           <path d="M14 2V5C14 6.65685 15.3431 8 17 8H20.5" stroke="#6B7280" stroke-width="1.5"/>
+                           <path d="M8 15H16" stroke="#6B7280" stroke-width="1.5" stroke-linecap="round"/>
+                           <path d="M8 18H13" stroke="#6B7280" stroke-width="1.5" stroke-linecap="round"/>
                         </svg>
                     </button>
                     <button class="send-button">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                             <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
                         </svg>
                     </button>
                 </div>
             </div>
         </div>
-        
-        <div class="image-section">
-            <div class="image-header">
-                <h2>KV主视觉生成结果</h2>
-                <p>基于您的需求生成的游戏活动KV设计</p>
-            </div>
-            
-            <div class="image-gallery">
-                <div class="image-item" id="image-item-1">
-                    <div class="image-placeholder">
-                        🐉 传统水墨风格<br>国潮飞龙KV主视觉<br>1920x1080
-                    </div>
-                    <div class="image-info">
-                        <span class="style-tag">传统水墨</span>
-                        <span class="score">美学: 8.5/10</span>
-                    </div>
-                    <div class="image-actions">
-                        <button class="action-button">下载</button>
-                        <button class="action-button primary select-style-btn">选择此风格</button>
-                    </div>
-                </div>
-                
-                <div class="image-item" id="image-item-2">
-                    <div class="image-placeholder">
-                        🐲 现代国潮风格<br>潮流飞龙KV主视觉<br>1920x1080
-                    </div>
-                    <div class="image-info">
-                        <span class="style-tag">现代国潮</span>
-                        <span class="score">美学: 9.2/10</span>
-                    </div>
-                    <div class="image-actions">
-                        <button class="action-button">下载</button>
-                        <button class="action-button select-style-btn">选择此风格</button>
-                    </div>
-                </div>
-                
-                <div class="image-item" id="image-item-3">
-                    <div class="image-placeholder">
-                        🔥 赛博国风风格<br>科技感飞龙KV主视觉<br>1920x1080
-                    </div>
-                    <div class="image-info">
-                        <span class="style-tag">赛博国风</span>
-                        <span class="score">美学: 8.8/10</span>
-                    </div>
-                    <div class="image-actions">
-                        <button class="action-button">下载</button>
-                        <button class="action-button select-style-btn">选择此风格</button>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const selectButtons = document.querySelectorAll('.select-style-btn');
-            const chatInput = document.querySelector('.input-field');
+            const options = document.querySelectorAll('.option-item');
+            const userMessages = document.querySelectorAll('.message.user .message-content');
+            const choiceMessage = userMessages[0];
+            const lastUserMessage = userMessages[userMessages.length - 1];
+            const statusText = document.querySelector('.status-text');
+            const imagePlaceholder = document.querySelector('.image-placeholder');
+
+            const textMap = {
+                '头像框': {
+                    request: '我想要一个和KV风格切合的头像框设计',
+                    status: '正在生成头像框...',
+                    placeholder: '🖼️ 头像框设计<br>生成中...'
+                },
+                'KV主视觉': {
+                    request: '我想要一个麦田舞者的KV主视觉',
+                    status: '正在生成KV主视觉...',
+                    placeholder: '🌾 麦田舞者KV主视觉<br>生成中...'
+                },
+                '奖励大图': {
+                    request: '我想要一张和KV风格匹配的奖励大图',
+                    status: '正在生成奖励大图...',
+                    placeholder: '🏆 奖励大图设计<br>生成中...'
+                },
+                'UI组件换肤': {
+                    request: '我想要一套和KV风格匹配的UI组件皮肤',
+                    status: '正在应用UI组件皮肤...',
+                    placeholder: '👕 UI组件换肤<br>应用中...'
+                }
+            };
+
+            options.forEach(option => {
+                option.addEventListener('click', () => {
+                    // 移除所有选项的 'selected' 状态和 '已选择' 标签
+                    options.forEach(opt => {
+                        opt.classList.remove('selected');
+                        const existingBadge = opt.querySelector('.selected-badge');
+                        if (existingBadge) {
+                            existingBadge.remove();
+                        }
+                    });
+
+                    // 为当前点击的选项添加 'selected' 状态和 '已选择' 标签
+                    option.classList.add('selected');
+                    const badge = document.createElement('div');
+                    badge.className = 'selected-badge';
+                    badge.textContent = '已选择';
+                    option.appendChild(badge);
+
+                    const optionTitle = option.querySelector('.option-title').textContent;
+                    const selectedTexts = textMap[optionTitle];
+
+                    if (selectedTexts) {
+                        // 1. 更新用户选择消息
+                        if(choiceMessage) {
+                            choiceMessage.textContent = optionTitle;
+                        }
+
+                        // 2. 更新详细需求消息
+                        if (lastUserMessage) {
+                            lastUserMessage.textContent = selectedTexts.request;
+                        }
     
-            selectButtons.forEach(button => {
-                button.addEventListener('click', () => {
-                    const imageItem = button.closest('.image-item');
-                    if (imageItem) {
-                        const imageId = imageItem.id;
-                        chatInput.value = `[已选择图片ID: ${imageId}] `;
-                        chatInput.focus();
+                        // 3. 更新 AI 状态指示器
+                        if (statusText) {
+                            statusText.textContent = selectedTexts.status;
+                        }
+    
+                        // 4. 更新图片占位符
+                        if (imagePlaceholder) {
+                            imagePlaceholder.innerHTML = selectedTexts.placeholder;
+                        }
                     }
                 });
             });
+
+            // 初始化时触发一次点击事件，以确保默认选中项的文案正确
+            const initialSelected = document.querySelector('.option-item.selected');
+            if(initialSelected) {
+                initialSelected.click();
+            }
         });
     </script>
 </body>
